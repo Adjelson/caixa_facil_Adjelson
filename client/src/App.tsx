@@ -1,17 +1,50 @@
-import { useState } from 'react'
+
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/layout/Layout';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import PDV from './pages/PDV';
+import Products from './pages/Products';
+import { Cash, Reports, ProductForm } from './pages/Placeholders';
+import Users from './pages/Users';
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="p-8 bg-white shadow-lg rounded-lg">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">Caixa Fácil</h1>
-        <p className="text-gray-600">Sistema PDV iniciado com sucesso.</p>
-        <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-          Iniciar
-        </button>
-      </div>
-    </div>
-  )
+    <AuthProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Route */}
+            <Route path="/login" element={<Login />} />
+
+            {/* Protected Routes */}
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Layout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="pdv" element={<PDV />} />
+              <Route path="products" element={<Products />} />
+              <Route path="products/new" element={<ProductForm />} />
+              <Route path="users" element={<Users />} />
+              <Route path="cash" element={<Cash />} />
+              <Route path="reports" element={<Reports />} />
+            </Route>
+
+            {/* Redirect */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
