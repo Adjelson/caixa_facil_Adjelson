@@ -1,5 +1,7 @@
 # Caixa Fácil - Sistema PDV
 
+<img src="./dashboard.png" width="300" />
+
 Sistema completo de **Ponto de Venda (PDV) + Estoque + Financeiro** focado em velocidade e simplicidade. Desenvolvido para realizar vendas em 10-30 segundos.
 
 ## 🚀 Tecnologias
